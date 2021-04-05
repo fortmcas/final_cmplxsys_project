@@ -2,19 +2,12 @@ import pandas
 from datetime import datetime
 import pickle
 
-def get_and_pickle_data(attack_start, attack_end, df, pickled_name):
-    df['Timestamp'] = pandas.to_datetime(df['Timestamp'], format='%d/%m/%Y %H:%M:%S', errors='ignore')
-    infiltration_rows_indices = df.loc[df['Label'] == 'Infilteration'].index
-    selected_timestamps = []
-    for timestamp in df.loc[infiltration_rows_indices]['Timestamp']:
-        datetime_obj = datetime.strptime(timestamp, '%d/%m/%Y %H:%M:%S')
-        if ((datetime_obj >= attack_start) and (datetime_obj <= attack_end)):
-            selected_timestamps += [timestamp]
-    final_rows = df.loc[(df['Timestamp'].isin(selected_timestamps)) & (df['Label'] == 'Infilteration')]
+def get_and_pickle_data(df, pickled_name, attack_name):
+    attack_rows = df.loc[df['Label'] == attack_name]
     key_data = []
     flow_duration = None
     for i in range(75):
-        summed_value = final_rows.iloc[:,i+3].astype(float).sum()
+        summed_value = attack_rows.iloc[:,i+3].astype(float).sum()
         if i==0:
             flow_duration=summed_value
         elif (i==13 or i==14):
@@ -34,19 +27,116 @@ def check_pickle_success(pickled_name, variable):
     assert pickled_var == variable
 
 # First Infiltration Attack
-attack_start = datetime(2018, 2, 28, 10, 50)
-attack_end = datetime(2018, 2, 28, 12, 5)
 df = pandas.read_csv("Wednesday-28-02-2018_TrafficForML_CICFlowMeter.csv")
-pickled_name = "firstinfil.pckl"
-get_and_pickle_data(attack_start, attack_end, df, pickled_name)
+attack_name = "Infilteration"
+pickled_name = "infil1.pckl"
+get_and_pickle_data(df, pickled_name, attack_name)
 
 # Second Infiltration Attack
-attack_start = datetime(2018, 3, 1, 9, 57)
-attack_end = datetime(2018, 3, 1, 10, 55)
+attack_name = "Infilteration"
 df = pandas.read_csv("Thursday-01-03-2018_TrafficForML_CICFlowMeter.csv")
-pickled_name = "secondinfil.pckl"
-get_and_pickle_data(attack_start, attack_end, df, pickled_name)
+pickled_name = "infil2.pckl"
+get_and_pickle_data(df, pickled_name, attack_name)
 
+# First DoS Attack - GoldenEye
+df = pandas.read_csv("Thursday-15-02-2018_TrafficForML_CICFlowMeter.csv")
+pickled_name = "dos1.pckl"
+attack_name = "DoS attacks-GoldenEye"
+get_and_pickle_data(df, pickled_name, attack_name)
 
+# Second DoS Attack - Slowloris
+df = pandas.read_csv("Thursday-15-02-2018_TrafficForML_CICFlowMeter.csv")
+pickled_name = "dos2.pckl"
+attack_name = "DoS attacks-Slowloris"
+get_and_pickle_data(df, pickled_name, attack_name)
 
+# Third DoS Attack - Hulk
+df = pandas.read_csv("Friday-16-02-2018_TrafficForML_CICFlowMeter.csv")
+pickled_name = "dos3.pckl"
+attack_name = "DoS attacks-Hulk"
+get_and_pickle_data(df, pickled_name, attack_name)
+
+# First DDoS-LOIC-UDP Attack
+df = pandas.read_csv("Tuesday-20-02-2018_TrafficForML_CICFlowMeter.csv")
+pickled_name = "ddosloicudp1.pckl"
+attack_name = "DDOS attack-LOIC-UDP"
+get_and_pickle_data(df, pickled_name, attack_name)
+
+# Second DDoS-LOIC-UDP Attack
+df = pandas.read_csv("Wednesday-21-02-2018_TrafficForML_CICFlowMeter.csv")
+pickled_name = "ddosloicudp2.pckl"
+attack_name = "DDOS attack-LOIC-UDP"
+get_and_pickle_data(df, pickled_name, attack_name)
+
+# First SQL Injection Attack
+df = pandas.read_csv("Thursday-22-02-2018_TrafficForML_CICFlowMeter.csv")
+pickled_name = "sqlinjection1.pckl"
+attack_name = "SQL Injection"
+get_and_pickle_data(df, pickled_name, attack_name)
+
+# Second SQL Injection Attack
+df = pandas.read_csv("Friday-23-02-2018_TrafficForML_CICFlowMeter.csv")
+pickled_name = "sqlinjection2.pckl"
+attack_name = "SQL Injection"
+get_and_pickle_data(df, pickled_name, attack_name)
+
+# First Benign Data Set
+df = pandas.read_csv("Friday-02-03-2018_TrafficForML_CICFlowMeter.csv")
+pickled_name = "benign1.pckl"
+attack_name = "Benign"
+get_and_pickle_data(df, pickled_name, attack_name)
+
+# Second Benign Data Set
+df = pandas.read_csv("Friday-16-02-2018_TrafficForML_CICFlowMeter.csv")
+pickled_name = "benign2.pckl"
+attack_name = "Benign"
+get_and_pickle_data(df, pickled_name, attack_name)
+
+# Third Benign Data Set
+df = pandas.read_csv("Friday-23-02-2018_TrafficForML_CICFlowMeter.csv")
+pickled_name = "benign3.pckl"
+attack_name = "Benign"
+get_and_pickle_data(df, pickled_name, attack_name)
+
+# Fourth Benign Data Set
+df = pandas.read_csv("Thursday-01-03-2018_TrafficForML_CICFlowMeter.csv")
+pickled_name = "benign4.pckl"
+attack_name = "Benign"
+get_and_pickle_data(df, pickled_name, attack_name)
+
+# Fifth Benign Data Set
+df = pandas.read_csv("Thursday-15-02-2018_TrafficForML_CICFlowMeter.csv")
+pickled_name = "benign5.pckl"
+attack_name = "Benign"
+get_and_pickle_data(df, pickled_name, attack_name)
+
+# Sixth Benign Data Set
+df = pandas.read_csv("Thursday-22-02-2018_TrafficForML_CICFlowMeter.csv")
+pickled_name = "benign6.pckl"
+attack_name = "Benign"
+get_and_pickle_data(df, pickled_name, attack_name)
+
+# Seventh Benign Data Set
+df = pandas.read_csv("Tuesday-20-02-2018_TrafficForML_CICFlowMeter.csv")
+pickled_name = "benign7.pckl"
+attack_name = "Benign"
+get_and_pickle_data(df, pickled_name, attack_name)
+
+# Eighth Benign Data Set
+df = pandas.read_csv("Wednesday-14-02-2018_TrafficForML_CICFlowMeter.csv")
+pickled_name = "benign8.pckl"
+attack_name = "Benign"
+get_and_pickle_data(df, pickled_name, attack_name)
+
+# Ninth Benign Data Set
+df = pandas.read_csv("Wednesday-21-02-2018_TrafficForML_CICFlowMeter.csv")
+pickled_name = "benign9.pckl"
+attack_name = "Benign"
+get_and_pickle_data(df, pickled_name, attack_name)
+
+# Tenth Benign Data Set
+df = pandas.read_csv("Wednesday-28-02-2018_TrafficForML_CICFlowMeter.csv")
+pickled_name = "benign10.pckl"
+attack_name = "Benign"
+get_and_pickle_data(df, pickled_name, attack_name)
 
