@@ -66,41 +66,48 @@ def mutate_network(simple_net, mutation_rate=0.001):
             layer_to_mut[selected_location[0], selected_location[1]] = np.random.uniform(-100,100)
 
 """    
-This code will work even without a mutation function, but you'll not be introducing any variation into the population. Once you have a working mutation function, you'll have more fun. 
-
-For this problem, we're going to try to evolve a solution to the last question from the last worksheet. 
-
-| Input 1 | Input 2 | Output |
-|---------|---------|--------|
-| 0       | 0       | 0      |
-| 0       | 1       | 1      |
-| 1       | 0       | 1      |
-| 1       | 1       | 0      |
+Output Code: [0] = Benign
+             [1] = Attack
 """
-input_set = [[0,0],
-             [0,1],
-             [1,0],
-             [1,1]]
+with open('benign1.pckl', 'rb') as f:
+    benign1 = pickle.load(f)
+with open('benign2.pckl', 'rb') as f:
+    benign2 = pickle.load(f)
+with open('benign3.pckl', 'rb') as f:
+    benign3 = pickle.load(f)
+with open('benign4.pckl', 'rb') as f:
+    benign4 = pickle.load(f)
+with open('dos1.pckl', 'rb') as f:
+    dos1 = pickle.load(f)
+with open('dos2.pckl', 'rb') as f:
+    dos2 = pickle.load(f)
+with open('infil1.pckl', 'rb') as f:
+    infil1 = pickle.load(f)
+with open('sqlinjection1.pckl', 'rb') as f:
+    sqlinjection1 = pickle.load(f)
 
-output_set = [[0], 
-              [1],
-              [1], 
-              [0]]
+input_set = [benign1,
+             benign2,
+             benign3,
+             dos1,
+             dos2,
+             infil1,
+             sqlinjection1]
 
+output_set = [0, 0, 0, 1, 1, 1, 1]
 
-pop_size = 100
-num_generations = 100
-mutation_rate = 0.05
+pop_size = 200
+mutation_rate = 0.07
 
-population = [ SimpleNeuralNet(num_inputs=2, 
+population = [ SimpleNeuralNet(num_inputs=72, 
                                num_outputs=1, 
-                               layer_node_counts=[5])
+                               layer_node_counts=[60, 50, 40, 30, 20, 10,5])
               for i in range(pop_size)]
 
 avg_fitnesses = []
 gen = 0
 this_gen_avg_fitness = -1000
-while (this_gen_avg_fitness < -0.001):
+while (this_gen_avg_fitness < -0.1):
     print(gen)
     selected_individuals = [tournament_selection(population, 
                                                  input_set, 

@@ -56,18 +56,6 @@ pickled_name = "dos3.pckl"
 attack_name = "DoS attacks-Hulk"
 get_and_pickle_data(df, pickled_name, attack_name)
 
-# First DDoS-LOIC-UDP Attack
-df = pandas.read_csv("Tuesday-20-02-2018_TrafficForML_CICFlowMeter.csv")
-pickled_name = "ddosloicudp1.pckl"
-attack_name = "DDOS attack-LOIC-UDP"
-get_and_pickle_data(df, pickled_name, attack_name)
-
-# Second DDoS-LOIC-UDP Attack
-df = pandas.read_csv("Wednesday-21-02-2018_TrafficForML_CICFlowMeter.csv")
-pickled_name = "ddosloicudp2.pckl"
-attack_name = "DDOS attack-LOIC-UDP"
-get_and_pickle_data(df, pickled_name, attack_name)
-
 # First SQL Injection Attack
 df = pandas.read_csv("Thursday-22-02-2018_TrafficForML_CICFlowMeter.csv")
 pickled_name = "sqlinjection1.pckl"
@@ -107,36 +95,6 @@ get_and_pickle_data(df, pickled_name, attack_name)
 # Fifth Benign Data Set
 df = pandas.read_csv("Thursday-15-02-2018_TrafficForML_CICFlowMeter.csv")
 pickled_name = "benign5.pckl"
-attack_name = "Benign"
-get_and_pickle_data(df, pickled_name, attack_name)
-
-# Sixth Benign Data Set
-df = pandas.read_csv("Thursday-22-02-2018_TrafficForML_CICFlowMeter.csv")
-pickled_name = "benign6.pckl"
-attack_name = "Benign"
-get_and_pickle_data(df, pickled_name, attack_name)
-
-# Seventh Benign Data Set
-df = pandas.read_csv("Tuesday-20-02-2018_TrafficForML_CICFlowMeter.csv")
-pickled_name = "benign7.pckl"
-attack_name = "Benign"
-get_and_pickle_data(df, pickled_name, attack_name)
-
-# Eighth Benign Data Set
-df = pandas.read_csv("Wednesday-14-02-2018_TrafficForML_CICFlowMeter.csv")
-pickled_name = "benign8.pckl"
-attack_name = "Benign"
-get_and_pickle_data(df, pickled_name, attack_name)
-
-# Ninth Benign Data Set
-df = pandas.read_csv("Wednesday-21-02-2018_TrafficForML_CICFlowMeter.csv")
-pickled_name = "benign9.pckl"
-attack_name = "Benign"
-get_and_pickle_data(df, pickled_name, attack_name)
-
-# Tenth Benign Data Set
-df = pandas.read_csv("Wednesday-28-02-2018_TrafficForML_CICFlowMeter.csv")
-pickled_name = "benign10.pckl"
 attack_name = "Benign"
 get_and_pickle_data(df, pickled_name, attack_name)
 
