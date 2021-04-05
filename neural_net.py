@@ -66,8 +66,10 @@ def mutate_network(simple_net, mutation_rate=0.001):
             layer_to_mut[selected_location[0], selected_location[1]] = np.random.uniform(-100,100)
 
 """    
-Output Code: [0] = Benign
-             [1] = Attack
+Output Code: [0, 0, 0, 1] = Benign
+             [0, 0, 1, 0] = DoS Attack
+             [0, 1, 0, 0] = Infiltration Attack
+             [1, 0, 0, 0] = SQL Injection Attack
 """
 with open('benign1.pckl', 'rb') as f:
     benign1 = pickle.load(f)
@@ -94,14 +96,21 @@ input_set = [benign1,
              infil1,
              sqlinjection1]
 
-output_set = [0, 0, 0, 1, 1, 1, 1]
+output_set = [[0, 0, 0, 1],
+              [0, 0, 0, 1],
+              [0, 0, 0, 1],
+              [0, 0, 1, 0],
+              [0, 0, 1, 0],
+              [0, 1, 0, 0],
+              [1, 0, 0, 0],
+            ]
 
-pop_size = 200
+pop_size = 150
 mutation_rate = 0.07
 
 population = [ SimpleNeuralNet(num_inputs=72, 
-                               num_outputs=1, 
-                               layer_node_counts=[60, 50, 40, 30, 20, 10,5])
+                               num_outputs=4, 
+                               layer_node_counts=[50, 50, 50, 50, 50,50])
               for i in range(pop_size)]
 
 avg_fitnesses = []
@@ -135,9 +144,10 @@ for idv in population:
 filename = 'most_fit.pckl'
 with open(filename, 'wb') as f:
     pickle.dump(most_fit_individual, f)
-
+"""
 plt.plot(avg_fitnesses)
 plt.xlabel("Generation")
 plt.ylabel("Fitness")
 plt.savefig('plot.png')
 subprocess.run(["./move_plot.sh"])
+"""

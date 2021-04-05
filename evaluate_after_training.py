@@ -59,8 +59,10 @@ with open(filename, 'rb') as f:
     most_fit_individual = pickle.load(f)
 
 """    
-Output Code: [0] = Benign
-             [1] = Attack
+Output Code: [0, 0, 0, 1] = Benign
+             [0, 0, 1, 0] = DoS Attack
+             [0, 1, 0, 0] = Infiltration Attack
+             [1, 0, 0, 0] = SQL Injection Attack
 """
 with open('benign4.pckl', 'rb') as f:
     benign4 = pickle.load(f)
@@ -79,8 +81,15 @@ input_set = [benign4,
              infil2,
              sqlinjection2]
 
-desired_output_set = [0, 0, 1, 1, 1]
+desired_output_set = [[0, 0, 0, 1],
+                      [0, 0, 0, 1],
+                      [0, 0, 1, 0],
+                      [0, 1, 0, 0],
+                      [1, 0, 0, 0],
+                    ]
 print(get_network_fitness(most_fit_individual, input_set, desired_output_set))
+"""
 achieved_output_set = get_network_output(most_fit_individual,input_set)
 print("Desired Output Set: {}".format(desired_output_set))
 print("Achieved Output Set: {}".format(achieved_output_set))
+"""
