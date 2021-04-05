@@ -3,6 +3,7 @@ np.seterr(over='ignore', divide='raise')
 from matplotlib import pyplot as plt
 import subprocess
 import random
+import pickle
 
 class SimpleNeuralNet():
     def activation_function(self, x):
@@ -124,8 +125,9 @@ for idv in population:
         highest_fitness = this_fitness
         most_fit_individual = idv
 
-print(most_fit_individual.layers)
-print(highest_fitness)
+filename = 'most_fit.pckl'
+with open(filename, 'wb') as f:
+    pickle.dump(most_fit_individual, f)
 
 plt.plot(avg_fitnesses)
 plt.xlabel("Generation")
