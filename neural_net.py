@@ -66,10 +66,8 @@ def mutate_network(simple_net, mutation_rate=0.001):
             layer_to_mut[selected_location[0], selected_location[1]] = np.random.uniform(-100,100)
 
 """    
-Output Code: [0, 0, 0, 1] = Benign
-             [0, 0, 1, 0] = DoS Attack
-             [0, 1, 0, 0] = Infiltration Attack
-             [1, 0, 0, 0] = SQL Injection Attack
+Output Code: 0 = Benign
+             1 = Attack
 """
 with open('benign1.pckl', 'rb') as f:
     benign1 = pickle.load(f)
@@ -96,27 +94,20 @@ input_set = [benign1,
              infil1,
              sqlinjection1]
 
-output_set = [[0, 0, 0, 1],
-              [0, 0, 0, 1],
-              [0, 0, 0, 1],
-              [0, 0, 1, 0],
-              [0, 0, 1, 0],
-              [0, 1, 0, 0],
-              [1, 0, 0, 0],
-            ]
+output_set = [0, 0, 0, 0, 1, 1, 1, 1]
 
 pop_size = 150
 mutation_rate = 0.07
 
 population = [ SimpleNeuralNet(num_inputs=72, 
-                               num_outputs=4, 
-                               layer_node_counts=[50, 50, 50, 50, 50,50])
+                               num_outputs=1, 
+                               layer_node_counts=[50, 50, 50, 50, 50,50, 50, 50, 50])
               for i in range(pop_size)]
 
 avg_fitnesses = []
 gen = 0
 this_gen_avg_fitness = -1000
-while (this_gen_avg_fitness < -0.1):
+while (this_gen_avg_fitness < -0.01):
     print(gen)
     selected_individuals = [tournament_selection(population, 
                                                  input_set, 

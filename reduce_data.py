@@ -98,3 +98,32 @@ pickled_name = "benign5.pckl"
 attack_name = "Benign"
 get_and_pickle_data(df, pickled_name, attack_name)
 
+# Bot Data Set
+df = pandas.read_csv("Friday-02-03-2018_TrafficForML_CICFlowMeter.csv")
+pickled_name = "bot1.pckl"
+attack_name = "Bot"
+get_and_pickle_data(df, pickled_name, attack_name)
+
+# Brute Force - Web Data Set
+df = pandas.read_csv("Thursday-22-02-2018_TrafficForML_CICFlowMeter.csv")
+pickled_name = "bf1.pckl"
+attack_name = "Brute Force -Web"
+get_and_pickle_data(df, pickled_name, attack_name)
+
+# Brute Force - XSS Data Set
+df = pandas.read_csv("Thursday-22-02-2018_TrafficForML_CICFlowMeter.csv")
+pickled_name = "bf2.pckl"
+attack_name = "Brute Force -XSS"
+get_and_pickle_data(df, pickled_name, attack_name)
+
+# FTP-BruteForce Data Set
+df = pandas.read_csv("Wednesday-14-02-2018_TrafficForML_CICFlowMeter.csv")
+pickled_name = "bf3.pckl"
+attack_name = "FTP-BruteForce"
+get_and_pickle_data(df, pickled_name, attack_name)
+
+# SSH-BruteForce Data Set
+df = pandas.read_csv("Wednesday-14-02-2018_TrafficForML_CICFlowMeter.csv")
+pickled_name = "bf3.pckl"
+attack_name = "SSH-BruteForce"
+get_and_pickle_data(df, pickled_name, attack_name)
