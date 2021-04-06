@@ -76,10 +76,6 @@ with open('bot1.pckl', 'rb') as f:
     bot1 = pickle.load(f)
 with open('bf2.pckl', 'rb') as f:
     bf2 = pickle.load(f)
-with open('bf3.pckl', 'rb') as f:
-    bf3 = pickle.load(f)
-with open('bf4.pckl', 'rb') as f:
-    bf4 = pickle.load(f)
 
 input_set = [benign4,
              benign5,
