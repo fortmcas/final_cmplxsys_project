@@ -124,6 +124,6 @@ get_and_pickle_data(df, pickled_name, attack_name)
 
 # SSH-BruteForce Data Set
 df = pandas.read_csv("Wednesday-14-02-2018_TrafficForML_CICFlowMeter.csv")
-pickled_name = "bf3.pckl"
-attack_name = "SSH-BruteForce"
+pickled_name = "bf4.pckl"
+attack_name = "SSH-Bruteforce"
 get_and_pickle_data(df, pickled_name, attack_name)

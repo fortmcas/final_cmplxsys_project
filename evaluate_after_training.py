@@ -72,17 +72,25 @@ with open('infil2.pckl', 'rb') as f:
     infil2 = pickle.load(f)
 with open('sqlinjection2.pckl', 'rb') as f:
     sqlinjection2 = pickle.load(f)
+with open('bot1.pckl', 'rb') as f:
+    bot1 = pickle.load(f)
+with open('bf2.pckl', 'rb') as f:
+    bf2 = pickle.load(f)
+with open('bf3.pckl', 'rb') as f:
+    bf3 = pickle.load(f)
+with open('bf4.pckl', 'rb') as f:
+    bf4 = pickle.load(f)
 
 input_set = [benign4,
              benign5,
              dos3,
              infil2,
-             sqlinjection2]
+             sqlinjection2,
+             bot1,
+             bf2]
 
-desired_output_set = [0, 0, 1, 1, 1]
+desired_output_set = [0, 0,1, 1, 1,1,1]
 print(get_network_fitness(most_fit_individual, input_set, desired_output_set))
-"""
 achieved_output_set = get_network_output(most_fit_individual,input_set)
 print("Desired Output Set: {}".format(desired_output_set))
 print("Achieved Output Set: {}".format(achieved_output_set))
-"""

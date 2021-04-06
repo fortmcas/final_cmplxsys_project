@@ -85,6 +85,8 @@ with open('infil1.pckl', 'rb') as f:
     infil1 = pickle.load(f)
 with open('sqlinjection1.pckl', 'rb') as f:
     sqlinjection1 = pickle.load(f)
+with open('bf1.pckl', 'rb') as f:
+    bf1 = pickle.load(f)
 
 input_set = [benign1,
              benign2,
@@ -92,22 +94,23 @@ input_set = [benign1,
              dos1,
              dos2,
              infil1,
-             sqlinjection1]
+             sqlinjection1,
+             bf1]
 
-output_set = [0, 0, 0, 0, 1, 1, 1, 1]
+output_set = [0, 0, 0, 1, 1, 1, 1,1]
 
 pop_size = 150
 mutation_rate = 0.07
 
 population = [ SimpleNeuralNet(num_inputs=72, 
                                num_outputs=1, 
-                               layer_node_counts=[50, 50, 50, 50, 50,50, 50, 50, 50])
+                               layer_node_counts=[50, 40, 30, 20, 10, 5, 3])
               for i in range(pop_size)]
 
 avg_fitnesses = []
 gen = 0
 this_gen_avg_fitness = -1000
-while (this_gen_avg_fitness < -0.01):
+while (this_gen_avg_fitness < -0.05):
     print(gen)
     selected_individuals = [tournament_selection(population, 
                                                  input_set, 
