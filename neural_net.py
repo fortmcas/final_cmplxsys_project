@@ -1,17 +1,19 @@
-import numpy as np
-
-np.seterr(over="ignore", divide="raise")
-from matplotlib import pyplot as plt
-import subprocess
 import random
 import pickle
-
+import numpy as np
+np.seterr(over="ignore", divide="raise")
 
 class SimpleNeuralNet:
     def activation_function(self, x):
+        """
+        Returns output of sigmoid function of input x
+        """
         return 1 / (1 + np.exp(-x))
 
     def deepcopy(self):
+        """
+        Makes a deep copy of SimpleNeuralNet object
+        """
         new_net = SimpleNeuralNet(
             self.num_inputs, self.num_outputs, self.layer_node_counts
         )
@@ -29,6 +31,9 @@ class SimpleNeuralNet:
         return next_v
 
     def __init__(self, num_inputs, num_outputs, layer_node_counts=[]):
+        """
+        Initializes SimpleNeuralNet object
+        """
         self.num_inputs = num_inputs
         self.layer_node_counts = layer_node_counts
         self.num_outputs = num_outputs
@@ -43,6 +48,9 @@ class SimpleNeuralNet:
 
 
 def get_network_fitness(simple_net, input_set, target_output_set):
+    """
+    Fitness function of neural network given input set and targeted output
+    """
     assert len(input_set) == len(target_output_set)
     total_distance = 0
 
@@ -58,6 +66,9 @@ def get_network_fitness(simple_net, input_set, target_output_set):
 def tournament_selection(
     population, input_set, target_set, fit_func, tournament_size=3
 ):
+    """
+    Performs tournament selection on a population
+    """
     sample_pop = np.random.choice(population, size=tournament_size)
     sample_pop_fitness = [fit_func(p, input_set, target_set) for p in sample_pop]
     winner_idx = np.argmax(sample_pop_fitness)
@@ -66,6 +77,9 @@ def tournament_selection(
 
 
 def mutate_network(simple_net, mutation_rate=0.001):
+    """
+    Performs mutation on a neural network
+    """
     if np.random.random() <= mutation_rate:
         for layer_to_mut in simple_net.layers:
             dims = layer_to_mut.shape

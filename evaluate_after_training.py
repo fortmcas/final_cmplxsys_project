@@ -1,13 +1,13 @@
+import pickle
 import numpy as np
 from neural_net import SimpleNeuralNet
-
 np.seterr(over="ignore", divide="raise")
-import subprocess
-import random
-import pickle
 
 
 def get_network_output(simple_net, input_set):
+    """
+    Obtains output of evolved network
+    """
     return_list = []
     for test_index in range(len(input_set)):
         test_output = simple_net.execute(input_set[test_index])
@@ -16,6 +16,9 @@ def get_network_output(simple_net, input_set):
 
 
 def get_network_fitness(simple_net, input_set, target_output_set):
+    """
+    Obtains fitness of evolved network
+    """
     assert len(input_set) == len(target_output_set)
     total_distance = 0
     for test_index in range(len(input_set)):
@@ -31,7 +34,7 @@ filename = "most_fit.pckl"
 with open(filename, "rb") as f:
     most_fit_individual = pickle.load(f)
 
-"""    
+"""
 Output Code: 0 = Benign
              1 = Attack
 """
