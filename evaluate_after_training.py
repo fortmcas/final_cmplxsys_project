@@ -1,6 +1,7 @@
 import pickle
 import numpy as np
 from neural_net import SimpleNeuralNet
+
 np.seterr(over="ignore", divide="raise")
 
 

@@ -13,7 +13,7 @@ def get_and_pickle_data(df, pickled_name, attack_name):
         summed_value = attack_rows.iloc[:, i + 3].astype(float).sum()
         if i == 0:
             flow_duration = summed_value
-        elif i in (13,14):
+        elif i in (13, 14):
             # Ignoring total packets and bytes because of infinity and NaN issues
             pass
         else:

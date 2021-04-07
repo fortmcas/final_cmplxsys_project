@@ -1,7 +1,9 @@
 import random
 import pickle
 import numpy as np
+
 np.seterr(over="ignore", divide="raise")
+
 
 class SimpleNeuralNet:
     def activation_function(self, input_value):
