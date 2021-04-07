@@ -2,29 +2,32 @@ import pandas
 from datetime import datetime
 import pickle
 
+
 def get_and_pickle_data(df, pickled_name, attack_name):
-    attack_rows = df.loc[df['Label'] == attack_name]
+    attack_rows = df.loc[df["Label"] == attack_name]
     key_data = []
     flow_duration = None
     for i in range(75):
-        summed_value = attack_rows.iloc[:,i+3].astype(float).sum()
-        if i==0:
-            flow_duration=summed_value
-        elif (i==13 or i==14):
+        summed_value = attack_rows.iloc[:, i + 3].astype(float).sum()
+        if i == 0:
+            flow_duration = summed_value
+        elif i == 13 or i == 14:
             # Ignoring total packets and bytes because of infinity and NaN issues
             pass
         else:
             key_data.append(summed_value)
     list_to_pickle = [x / flow_duration for x in key_data]
-    with open(pickled_name, 'wb') as f:
+    with open(pickled_name, "wb") as f:
         pickle.dump(list_to_pickle, f)
     check_pickle_success(pickled_name, list_to_pickle)
     print(list_to_pickle)
 
+
 def check_pickle_success(pickled_name, variable):
-    with open(pickled_name, 'rb') as f:
+    with open(pickled_name, "rb") as f:
         pickled_var = pickle.load(f)
     assert pickled_var == variable
+
 
 # First Infiltration Attack
 df = pandas.read_csv("Wednesday-28-02-2018_TrafficForML_CICFlowMeter.csv")
@@ -115,4 +118,3 @@ df = pandas.read_csv("Thursday-22-02-2018_TrafficForML_CICFlowMeter.csv")
 pickled_name = "bf2.pckl"
 attack_name = "Brute Force -XSS"
 get_and_pickle_data(df, pickled_name, attack_name)
-
