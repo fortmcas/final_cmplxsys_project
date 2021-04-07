@@ -76,85 +76,78 @@ def mutate_network(simple_net, mutation_rate=0.001):
                 selected_location[0], selected_location[1]
             ] = np.random.uniform(-100, 100)
 
-
-"""    
-Output Code: 0 = Benign
+if __name__ == "__main__":
+    """    
+    Output Code: 0 = Benign
              1 = Attack
-"""
-with open("benign1.pckl", "rb") as f:
-    benign1 = pickle.load(f)
-with open("benign2.pckl", "rb") as f:
-    benign2 = pickle.load(f)
-with open("benign3.pckl", "rb") as f:
-    benign3 = pickle.load(f)
-with open("benign4.pckl", "rb") as f:
-    benign4 = pickle.load(f)
-with open("dos1.pckl", "rb") as f:
-    dos1 = pickle.load(f)
-with open("dos2.pckl", "rb") as f:
-    dos2 = pickle.load(f)
-with open("infil1.pckl", "rb") as f:
-    infil1 = pickle.load(f)
-with open("sqlinjection1.pckl", "rb") as f:
-    sqlinjection1 = pickle.load(f)
-with open("bf1.pckl", "rb") as f:
-    bf1 = pickle.load(f)
+    """
+    with open("benign1.pckl", "rb") as f:
+        benign1 = pickle.load(f)
+    with open("benign2.pckl", "rb") as f:
+        benign2 = pickle.load(f)
+    with open("benign3.pckl", "rb") as f:
+        benign3 = pickle.load(f)
+    with open("benign4.pckl", "rb") as f:
+        benign4 = pickle.load(f)
+    with open("dos1.pckl", "rb") as f:
+        dos1 = pickle.load(f)
+    with open("dos2.pckl", "rb") as f:
+        dos2 = pickle.load(f)
+    with open("infil1.pckl", "rb") as f:
+        infil1 = pickle.load(f)
+    with open("sqlinjection1.pckl", "rb") as f:
+        sqlinjection1 = pickle.load(f)
+    with open("bf1.pckl", "rb") as f:
+        bf1 = pickle.load(f)
 
-input_set = [benign1, benign2, benign3, dos1, dos2, infil1, sqlinjection1, bf1]
+    input_set = [benign1, benign2, benign3, dos1, dos2, infil1, sqlinjection1, bf1]
 
-output_set = [0, 0, 0, 1, 1, 1, 1, 1]
+    output_set = [0, 0, 0, 1, 1, 1, 1, 1]
 
-pop_size = 150
-mutation_rate = 0.07
+    pop_size = 150
+    mutation_rate = 0.07
 
-population = [
-    SimpleNeuralNet(
-        num_inputs=72, num_outputs=1, layer_node_counts=[50, 40, 30, 20, 10, 5, 3]
-    )
-    for i in range(pop_size)
-]
-
-avg_fitnesses = []
-gen = 0
-this_gen_avg_fitness = -1000
-while this_gen_avg_fitness < -0.05:
-    print(gen)
-    selected_individuals = [
-        tournament_selection(
-            population, input_set, output_set, get_network_fitness
-        ).deepcopy()
-        for _ in range(pop_size)
+    population = [
+        SimpleNeuralNet(
+            num_inputs=72, num_outputs=1, layer_node_counts=[50, 40, 30, 20, 10, 5, 3]
+        )
+        for i in range(pop_size)
     ]
-    for individual in selected_individuals:
-        mutate_network(individual, mutation_rate)
 
-    this_gen_avg_fitness = np.mean(
-        [
-            get_network_fitness(idv, input_set, output_set)
-            for idv in selected_individuals
+    avg_fitnesses = []
+    gen = 0
+    this_gen_avg_fitness = -1000
+    while this_gen_avg_fitness < -0.05:
+        print(gen)
+        selected_individuals = [
+            tournament_selection(
+                population, input_set, output_set, get_network_fitness
+            ).deepcopy()
+            for _ in range(pop_size)
         ]
-    )
-    print(this_gen_avg_fitness)
-    avg_fitnesses.append(this_gen_avg_fitness)
+        for individual in selected_individuals:
+            mutate_network(individual, mutation_rate)
 
-    population = selected_individuals
-    gen += 1
+        this_gen_avg_fitness = np.mean(
+            [
+                get_network_fitness(idv, input_set, output_set)
+                for idv in selected_individuals
+            ]
+        )
+        print(this_gen_avg_fitness)
+        avg_fitnesses.append(this_gen_avg_fitness)
 
-highest_fitness = -1000
-most_fit_individual = None
-for idv in population:
-    this_fitness = get_network_fitness(idv, input_set, output_set)
-    if this_fitness > highest_fitness:
-        highest_fitness = this_fitness
-        most_fit_individual = idv
+        population = selected_individuals
+        gen += 1
 
-filename = "most_fit.pckl"
-with open(filename, "wb") as f:
-    pickle.dump(most_fit_individual, f)
-"""
-plt.plot(avg_fitnesses)
-plt.xlabel("Generation")
-plt.ylabel("Fitness")
-plt.savefig('plot.png')
-subprocess.run(["./move_plot.sh"])
-"""
+    highest_fitness = -1000
+    most_fit_individual = None
+    for idv in population:
+        this_fitness = get_network_fitness(idv, input_set, output_set)
+        if this_fitness > highest_fitness:
+            highest_fitness = this_fitness
+            most_fit_individual = idv
+
+    filename = "most_fit.pckl"
+    with open(filename, "wb") as f:
+        pickle.dump(most_fit_individual, f)
