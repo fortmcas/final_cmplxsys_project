@@ -4,11 +4,11 @@ import numpy as np
 np.seterr(over="ignore", divide="raise")
 
 class SimpleNeuralNet:
-    def activation_function(self, x):
+    def activation_function(self, input_value):
         """
-        Returns output of sigmoid function of input x
+        Returns output of sigmoid function of input value
         """
-        return 1 / (1 + np.exp(-x))
+        return 1 / (1 + np.exp(-input_value))
 
     def deepcopy(self):
         """
@@ -21,6 +21,9 @@ class SimpleNeuralNet:
         return new_net
 
     def execute(self, input_vector):
+        """
+        Iterates through layers, computing activation from previous layer
+        """
         assert len(input_vector) == self.num_inputs, "wrong input vector size"
 
         next_v = input_vector
@@ -40,11 +43,11 @@ class SimpleNeuralNet:
         self.layers = []
 
         last_num_neurons = self.num_inputs
-        for nc in layer_node_counts + [num_outputs]:
+        for node_count in layer_node_counts + [num_outputs]:
             self.layers.append(
-                np.random.uniform(-100, 100, size=(last_num_neurons + 1, nc))
+                np.random.uniform(-100, 100, size=(last_num_neurons + 1, node_count))
             )
-            last_num_neurons = nc
+            last_num_neurons = node_count
 
 
 def get_network_fitness(simple_net, input_set, target_output_set):
