@@ -1,9 +1,11 @@
-import pandas
-from datetime import datetime
 import pickle
+import pandas
 
 
 def get_and_pickle_data(df, pickled_name, attack_name):
+    """
+    Takes in dataframe, reduces desired data and pickles output with input name
+    """
     attack_rows = df.loc[df["Label"] == attack_name]
     key_data = []
     flow_duration = None
@@ -11,7 +13,7 @@ def get_and_pickle_data(df, pickled_name, attack_name):
         summed_value = attack_rows.iloc[:, i + 3].astype(float).sum()
         if i == 0:
             flow_duration = summed_value
-        elif i == 13 or i == 14:
+        elif i in (13,14):
             # Ignoring total packets and bytes because of infinity and NaN issues
             pass
         else:
@@ -24,6 +26,9 @@ def get_and_pickle_data(df, pickled_name, attack_name):
 
 
 def check_pickle_success(pickled_name, variable):
+    """
+    Checks that pickling occurred successfully
+    """
     with open(pickled_name, "rb") as f:
         pickled_var = pickle.load(f)
     assert pickled_var == variable
