@@ -1,9 +1,11 @@
 import numpy as np
 from neural_net import SimpleNeuralNet
+
 np.seterr(over="ignore", divide="raise")
 import subprocess
 import random
 import pickle
+
 
 def get_network_output(simple_net, input_set):
     return_list = []
@@ -11,6 +13,7 @@ def get_network_output(simple_net, input_set):
         test_output = simple_net.execute(input_set[test_index])
         return_list.append([list(test_output)])
     return return_list
+
 
 def get_network_fitness(simple_net, input_set, target_output_set):
     assert len(input_set) == len(target_output_set)
@@ -22,6 +25,7 @@ def get_network_fitness(simple_net, input_set, target_output_set):
         total_distance += np.sum(distances)
 
     return -total_distance
+
 
 filename = "most_fit.pckl"
 with open(filename, "rb") as f:

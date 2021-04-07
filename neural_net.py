@@ -76,8 +76,9 @@ def mutate_network(simple_net, mutation_rate=0.001):
                 selected_location[0], selected_location[1]
             ] = np.random.uniform(-100, 100)
 
+
 if __name__ == "__main__":
-    """    
+    """
     Output Code: 0 = Benign
              1 = Attack
     """
